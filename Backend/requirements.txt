@@ -5,3 +5,4 @@ torchvision
 pillow
 python-dotenv
 mysql-connector-python
+python-multipart
