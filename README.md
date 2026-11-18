@@ -29,15 +29,6 @@ Agri Breed AI is a deep learning-based web application that identifies cattle an
 2. The AI model predicts the breed.
 3. View the prediction and available breed information.
 
-🌱 Sustainable Development Goals:
-
-- SDG 2 — Zero Hunger: Supports informed livestock management.
-- SDG 8 — Decent Work and Economic Growth: Explores AI applications for agricultural communities.
-
-🧑🏻‍💻 Developer:
-
-Saif Anwar
-
 🔮 Future Scope:
 
 - Improve prediction accuracy
