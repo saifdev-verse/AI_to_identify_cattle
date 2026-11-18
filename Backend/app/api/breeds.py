@@ -44,11 +44,6 @@ def get_breed_details(breed_id, cursor):
 
     return result
 
-
-# --------------------------------------------------
-# 1. GET ALL BREEDS
-# --------------------------------------------------
-
 @router.get("/")
 def get_all_breeds(
     search: str | None = None,
@@ -111,12 +106,6 @@ def get_all_breeds(
         if connection and connection.is_connected():
             connection.close()
 
-
-
-# --------------------------------------------------
-# 3. COMPARE BREEDS
-# --------------------------------------------------
-
 @router.get("/compare")
 def compare_breeds(
     breed_ids: list[int] = Query(
@@ -175,11 +164,6 @@ def compare_breeds(
         if connection and connection.is_connected():
             connection.close()
 
-
-
-# --------------------------------------------------
-# 2. GET BREED DETAILS
-# --------------------------------------------------
 
 @router.get("/{breed_id}")
 def get_breed(

@@ -4,6 +4,7 @@ import mysql.connector
 
 from app.database.connection import get_db_connection
 from app.services.prediction_service import predict_image
+from app.services.animal_validation import validate_animal
 
 router = APIRouter(
     prefix="/predict",
@@ -63,7 +64,15 @@ async def predict(file: UploadFile = File(...)):
     cursor = None
 
     try:
-        # Run ResNet50 prediction
+        
+        validation = validate_animal(image_bytes)
+
+        if not validation["valid"]:
+            raise HTTPException(
+                status_code=400,
+                detail="No cattle or buffalo detected. Please upload a clear cattle or buffalo image."
+            )
+
         prediction = predict_image(image_bytes)
 
         breed_id = prediction["breed_id"]

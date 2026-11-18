@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.services.animal_validation import load_detector
 
 from app.core.config import (
     APP_NAME,
@@ -20,11 +21,6 @@ from app.services.prediction_service import load_model
 from app.api.prediction import router as prediction_router
 from app.api.analytics import router as analytics_router
 from app.api.breeds import router as breeds_router
-
-
-# --------------------------------------------------
-# APPLICATION LIFECYCLE
-# --------------------------------------------------
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -47,6 +43,7 @@ async def lifespan(app: FastAPI):
 
     # Load trained ResNet50 model
     load_model()
+    load_detector()
 
     print("AGRI BREED AI started successfully.")
 
@@ -55,21 +52,12 @@ async def lifespan(app: FastAPI):
     print("Shutting down AGRI BREED AI...")
 
 
-# --------------------------------------------------
-# FASTAPI APPLICATION
-# --------------------------------------------------
-
 app = FastAPI(
     title=APP_NAME,
     version=APP_VERSION,
     description="AI-powered Cattle and Buffalo Breed Identification System",
     lifespan=lifespan
 )
-
-
-# --------------------------------------------------
-# CORS CONFIGURATION
-# --------------------------------------------------
 
 app.add_middleware(
     CORSMiddleware,
@@ -80,18 +68,10 @@ app.add_middleware(
 )
 
 
-# --------------------------------------------------
-# API ROUTERS
-# --------------------------------------------------
-
 app.include_router(prediction_router)
 app.include_router(analytics_router)
 app.include_router(breeds_router)
 
-
-# --------------------------------------------------
-# ROOT ENDPOINT
-# --------------------------------------------------
 
 @app.get("/")
 def home():
@@ -100,11 +80,6 @@ def home():
         "message": "Welcome to AGRI BREED AI 2.0",
         "version": APP_VERSION
     }
-
-
-# --------------------------------------------------
-# HEALTH CHECK
-# --------------------------------------------------
 
 @app.get("/health")
 def health_check():

@@ -13,10 +13,6 @@ router = APIRouter(
 )
 
 
-# --------------------------------------------------
-# DATABASE HELPER
-# --------------------------------------------------
-
 def execute_query(query, params=None, fetch_all=True):
     """Execute a database query and return its results."""
 
@@ -47,10 +43,6 @@ def execute_query(query, params=None, fetch_all=True):
         if connection and connection.is_connected():
             connection.close()
 
-
-# --------------------------------------------------
-# 1. DASHBOARD SUMMARY
-# --------------------------------------------------
 
 @router.get("/summary")
 def dashboard_summary():
@@ -86,11 +78,6 @@ def dashboard_summary():
         "data": result
     }
 
-
-# --------------------------------------------------
-# 2. CATTLE VS BUFFALO DISTRIBUTION
-# --------------------------------------------------
-
 @router.get("/animal-distribution")
 def animal_distribution():
 
@@ -111,11 +98,6 @@ def animal_distribution():
         "success": True,
         "data": result
     }
-
-
-# --------------------------------------------------
-# 3. MOST FREQUENTLY PREDICTED BREEDS
-# --------------------------------------------------
 
 @router.get("/top-breeds")
 def top_breeds(
@@ -148,11 +130,6 @@ def top_breeds(
         "data": result
     }
 
-
-# --------------------------------------------------
-# 4. DAILY PREDICTION TRENDS
-# --------------------------------------------------
-
 @router.get("/prediction-trends")
 def prediction_trends(
     days: int = Query(default=7, ge=1, le=365)
@@ -177,11 +154,6 @@ def prediction_trends(
         "period_days": days,
         "data": result
     }
-
-
-# --------------------------------------------------
-# 5. RECENT PREDICTION HISTORY
-# --------------------------------------------------
 
 @router.get("/recent-predictions")
 def recent_predictions(

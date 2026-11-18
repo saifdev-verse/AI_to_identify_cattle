@@ -8,20 +8,11 @@ from PIL import Image, UnidentifiedImageError
 
 from app.core.config import MODEL_PATH, IMAGE_SIZE
 
-
-# --------------------------------------------------
-# MODEL CONFIGURATION
-# --------------------------------------------------
-
 NUM_CLASSES = 44
 
 model = None
 device = torch.device("cpu")
 
-
-# --------------------------------------------------
-# CLASS TO BREED ID MAPPING
-# --------------------------------------------------
 
 CLASS_TO_BREED_ID = {
     0: 11, 1: 12, 2: 13, 3: 1, 4: 14, 5: 2,
@@ -35,11 +26,6 @@ CLASS_TO_BREED_ID = {
     42: 43, 43: 44
 }
 
-
-# --------------------------------------------------
-# IMAGE TRANSFORM
-# --------------------------------------------------
-
 transform = transforms.Compose([
     transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
     transforms.ToTensor(),
@@ -48,11 +34,6 @@ transform = transforms.Compose([
         [0.229, 0.224, 0.225]
     )
 ])
-
-
-# --------------------------------------------------
-# LOAD TRAINED MODEL
-# --------------------------------------------------
 
 def load_model():
     """Load the trained ResNet50 model."""
@@ -87,10 +68,6 @@ def load_model():
 
     return model
 
-
-# --------------------------------------------------
-# IMAGE PREDICTION
-# --------------------------------------------------
 
 def predict_image(image_bytes: bytes) -> dict:
     """Predict cattle or buffalo breed from image bytes."""
