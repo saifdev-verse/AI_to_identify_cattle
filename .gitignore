@@ -12,14 +12,10 @@ __pycache__/
 .coverage
 htmlcov/
 
-# Virtual environments
 .venv/
 venv/
 env/
 
-# ==============================
-# Old frontend
-# ==============================
 /Frontend/
 /Backend/main.py
 
