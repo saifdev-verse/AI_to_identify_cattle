@@ -20,6 +20,11 @@ DB_PORT = int(os.getenv("DB_PORT", "3306"))
 DB_USER = os.getenv("DB_USER", "root")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 DB_NAME = os.getenv("DB_NAME", "indian_livestock")
+# Database SSL certificate
+DB_SSL_CA = os.getenv(
+    "DB_SSL_CA",
+    str(BASE_DIR / "certs" / "ca.pem")
+)
 
 # Model configuration
 MODEL_PATH = BASE_DIR / "model" / "Hack_ResNet50_model.pth"

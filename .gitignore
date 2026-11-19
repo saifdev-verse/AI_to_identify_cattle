@@ -37,3 +37,8 @@ Thumbs.db
 
 *.zip
 /Backend/test_images/
+Backend/certs/
+indian_livestock_backup.sql
+
+Backend/test_tidb_connection.py
+Backend/indian_livestock_backup.sql
