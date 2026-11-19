@@ -29,6 +29,10 @@ IMAGE_SIZE = 224
 
 # CORS configuration
 FRONTEND_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:5173",
+    origin.strip()
+    for origin in os.getenv(
+        "FRONTEND_ORIGINS",
+        "http://localhost:3000,http://localhost:5173"
+    ).split(",")
+    if origin.strip()
 ]

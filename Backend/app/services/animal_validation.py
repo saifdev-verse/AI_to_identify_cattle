@@ -1,9 +1,18 @@
 
-from ultralytics import YOLO
-from PIL import Image, UnidentifiedImageError
+from pathlib import Path
 import io
 
-# COCO-pretrained YOLO model
+from ultralytics import YOLO
+from PIL import Image, UnidentifiedImageError
+
+
+# Backend directory
+BASE_DIR = Path(__file__).resolve().parents[2]
+
+# YOLO model path
+YOLO_MODEL_PATH = BASE_DIR / "model" / "yolo11n.pt"
+
+# COCO-pretrained YOLO detector
 detector = None
 
 # COCO class ID for cow
@@ -17,7 +26,12 @@ def load_detector():
     """Load the pretrained YOLO detector."""
     global detector
 
-    detector = YOLO("yolo11n.pt")
+    if not YOLO_MODEL_PATH.exists():
+        raise FileNotFoundError(
+            f"YOLO model not found at: {YOLO_MODEL_PATH}"
+        )
+
+    detector = YOLO(str(YOLO_MODEL_PATH))
 
     print("YOLO animal detector loaded successfully.")
 
@@ -41,7 +55,9 @@ def validate_animal(image_bytes: bytes) -> dict:
         ).convert("RGB")
 
     except (UnidentifiedImageError, OSError) as error:
-        raise ValueError("Invalid or corrupted image file.") from error
+        raise ValueError(
+            "Invalid or corrupted image file."
+        ) from error
 
     results = detector.predict(
         source=image,
@@ -61,6 +77,9 @@ def validate_animal(image_bytes: bytes) -> dict:
             if class_id == COW_CLASS_ID:
                 detected_cow = True
                 break
+
+        if detected_cow:
+            break
 
     return {
         "valid": detected_cow,
